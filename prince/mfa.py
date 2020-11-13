@@ -113,7 +113,7 @@ class MFA(pca.PCA):
                 centre_tmp = tmp.mean() / len(tmp)
                 tmp2 = tmp / len(tmp)
                 poids_bary = tmp2.sum()
-                poids_tmp = 1 - tmp2.sum()
+                poids_tmp = (1 - tmp2.sum()).apply(lambda x: max(x, 0.)) #approximations may causes this to become negative..
                 ponderation = poids_tmp ** .5 / (self.partial_factor_analysis_[name].s_[0] * len(cols))
 
                 normalize = lambda x: x / (np.sqrt((x ** 2).sum()) or 1)
